@@ -1,0 +1,6 @@
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\obj\Debug\JuniorMindAlgorithm.csprojResolveAssemblyReference.cache
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\bin\Debug\JuniorMindAlgorithm.dll
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\bin\Debug\JuniorMindAlgorithm.pdb
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\obj\Debug\JuniorMindAlgorithm.dll
+C:\Users\Baby Blue\Documents\GitHub\JuniorMindAlgorithm\JuniorMindAlgorithm\obj\Debug\JuniorMindAlgorithm.pdb

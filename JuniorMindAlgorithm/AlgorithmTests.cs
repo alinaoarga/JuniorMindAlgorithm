@@ -9,23 +9,24 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void ConvertNumber22()
         {
-            Assert.AreEqual("10110", ConvertDecimalToBinary(22));
+            Assert.AreEqual(10110, ConvertDecimalToBinary(22));
         }
         [TestMethod]
         public void ConvertNumber13()
         {
-            Assert.AreEqual("1101", ConvertDecimalToBinary(13));
+            Assert.AreEqual(1101, ConvertDecimalToBinary(13));
         }
-        string ConvertDecimalToBinary(int number)
+        byte ConvertDecimalToBinary(int number)
         {
-            string result = string.Empty;
-            while (number > 0)
+            byte [] results = new byte[] { 0, 1};
+            byte i = 0;
+            while (number > 0 )
             {
-                int remainder = number % 2;
-                number /= 2;
-                result = remainder.ToString() + result;
+                   int remainder =(number % 2);
+                    number /= 2;
+                   results[i] += Convert.ToByte(remainder) ;
             }
-            return result;
+            return results[i];
         }
     }
 }

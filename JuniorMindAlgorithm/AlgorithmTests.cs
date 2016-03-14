@@ -21,6 +21,11 @@ namespace JuniorMindAlgorithm
         {
             CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, ConvertDecimalToBinary(11));
         }
+        [TestMethod]
+        public void Not11()
+        {
+            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0}, NotOperand(new byte[] { 1, 0, 1, 1 }));
+        }
         byte[] ConvertDecimalToBinary(int number)
         {
             byte[] results = new byte[0];
@@ -33,6 +38,18 @@ namespace JuniorMindAlgorithm
             }
             Array.Reverse(results);
             return results;
+        }
+        byte [] NotOperand(byte [] number)
+        {
+            foreach (byte element in number)
+            {
+                if(element == 1)
+                {
+                    byte newElement = 0;
+                    number[element] = number[newElement];
+                }
+            }
+            return number;
         }
     }
 }

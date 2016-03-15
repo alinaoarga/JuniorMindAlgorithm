@@ -46,14 +46,15 @@ namespace JuniorMindAlgorithm
         }
         byte Not(byte number)
         {
-          number = number == 0 ? (byte)1 : (byte)0;
+            number = number == 0 ? (byte)1 : (byte)0;
             return number;
         }
         byte[] NotOperand(byte[] numbers)
         {
-           for(int i = 0; i <= numbers.Length; i++)
+            for (int i = 0; i < numbers.Length; i++)
             {
                 numbers[i] = Not(numbers[i]);
+                
             }
             return numbers;
         }

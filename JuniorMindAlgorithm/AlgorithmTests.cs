@@ -42,11 +42,15 @@ namespace JuniorMindAlgorithm
         byte[] NotOperand(byte[] number)
         {
             byte i = 0;
-            byte element = 1;
-            while (number[i] == 1) 
+            foreach (byte elementt in number)
             {
-                number[i] -= element;
-                i++;
+                while (elementt <= number.Length)
+                {
+                    if (number[i] == 1)
+                        number[i] -= 1;
+                    i++;
+                    break;
+                }
             }
             return number;
         }

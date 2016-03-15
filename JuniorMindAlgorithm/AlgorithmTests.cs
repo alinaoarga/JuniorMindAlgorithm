@@ -24,7 +24,12 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void Not11()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 0, 0, 0 }, NotOperand(new byte[] { 1, 0, 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 0, 1, 0, 0 }, NotOperand(new byte[] { 1, 0, 1, 1 }));
+        }
+        [TestMethod]
+        public void Not()
+        {
+            Assert.AreEqual(1, Not(0));
         }
         byte[] ConvertDecimalToBinary(int number)
         {
@@ -39,20 +44,18 @@ namespace JuniorMindAlgorithm
             Array.Reverse(results);
             return results;
         }
-        byte[] NotOperand(byte[] number)
+        byte Not(byte number)
         {
-            byte i = 0;
-            foreach (byte elementt in number)
-            {
-                while (elementt <= number.Length)
-                {
-                    if (number[i] == 1)
-                        number[i] -= 1;
-                    i++;
-                    break;
-                }
-            }
+          number = number == 0 ? (byte)1 : (byte)0;
             return number;
+        }
+        byte[] NotOperand(byte[] numbers)
+        {
+           for(int i = 0; i <= numbers.Length; i++)
+            {
+                numbers[i] = Not(numbers[i]);
+            }
+            return numbers;
         }
     }
 }

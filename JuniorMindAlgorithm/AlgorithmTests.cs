@@ -37,10 +37,20 @@ namespace JuniorMindAlgorithm
             Assert.AreEqual(1, And(1, 1));
         }
         [TestMethod]
-        public void AndOperatorTest()
+        public void Or()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0 }, AndOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0}));
-        } 
+            Assert.AreEqual(0, Or(0,0));
+        }
+        [TestMethod]
+        public void AndOperandTest()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0 }, AndOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0 }));
+        }
+        [TestMethod]
+        public void OrOperandTest()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, OrOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0 }));
+        }
         byte[] ConvertDecimalToBinary(int number)
         {
             byte[] results = new byte[0];
@@ -85,10 +95,31 @@ namespace JuniorMindAlgorithm
             byte[] result = new byte[first.Length];
             for (int i = 0; i < first.Length; i++)
             {
-                
                 result[i] += And(first[i], second[i]);
             }
             return result;
-        } 
+        }
+        byte Or(byte number1, byte number2)
+        {
+            byte number = 0;
+            if (number1 == 0 && number2 == 0)
+            {
+                number = 0;
+            }
+            else
+            {
+                number = 1;
+            }
+            return number;
+        }
+        byte[] OrOperand(byte[] first, byte[] second)
+        {
+            byte[] result = new byte[first.Length];
+            for (int i = 0; i < first.Length; i++)
+            {
+                result[i] += Or(first[i], second[i]);
+            }
+            return result;
+        }
     }
 }

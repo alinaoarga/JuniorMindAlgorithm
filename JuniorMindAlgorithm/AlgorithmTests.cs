@@ -31,6 +31,16 @@ namespace JuniorMindAlgorithm
         {
             Assert.AreEqual(1, Not(0));
         }
+        [TestMethod]
+        public void And()
+        {
+            Assert.AreEqual(1, And(1, 1));
+        }
+        [TestMethod]
+        public void AndOperatorTest()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0 }, AndOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0}));
+        } 
         byte[] ConvertDecimalToBinary(int number)
         {
             byte[] results = new byte[0];
@@ -54,9 +64,31 @@ namespace JuniorMindAlgorithm
             for (int i = 0; i < numbers.Length; i++)
             {
                 numbers[i] = Not(numbers[i]);
-                
             }
             return numbers;
         }
+        byte And(byte number1, byte number2)
+        {
+            byte number = 0;
+            if (number1 == 1 && number2 == 1)
+            {
+                number = 1;
+            }
+            else
+            {
+                number = 0;
+            }
+            return number;
+        }
+        byte[] AndOperand(byte[] first, byte[] second)
+        {
+            byte[] result = new byte[first.Length];
+            for (int i = 0; i < first.Length; i++)
+            {
+                
+                result[i] += And(first[i], second[i]);
+            }
+            return result;
+        } 
     }
 }

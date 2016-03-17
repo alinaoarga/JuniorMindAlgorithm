@@ -24,7 +24,7 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void Not11()
         {
-            CollectionAssert.AreEqual(new byte[] { 0, 1, 0, 0 }, NotOperand(new byte[] { 1, 0, 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] {0, 1, 0, 0}, NotOperand(new byte[] { 1, 0, 1, 1 }));
         }
         [TestMethod]
         public void Not()
@@ -39,17 +39,28 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void Or()
         {
-            Assert.AreEqual(0, Or(0,0));
+            Assert.AreEqual(0, Or(0, 0));
         }
-        [TestMethod]
-        public void AndOperandTest()
-        {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 0, 0 }, AndOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0 }));
-        }
+        
         [TestMethod]
         public void OrOperandTest()
         {
-            CollectionAssert.AreEqual(new byte[] { 1, 0, 1, 1 }, OrOperand(new byte[] { 1, 0, 1, 1 }, new byte[] { 1, 0, 0, 0 }));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 3), OrOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+        }
+        [TestMethod]
+        public void OperandTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 3), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+        }
+        [TestMethod]
+        public void OperanddTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 5), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+        }
+        [TestMethod]
+        public void GetAtTest()
+        {
+            Assert.AreEqual(0, GetAt(new byte[] {1, 0, 1, 0, 1, 1}, 10));
         }
         byte[] ConvertDecimalToBinary(int number)
         {
@@ -63,6 +74,13 @@ namespace JuniorMindAlgorithm
             }
             Array.Reverse(results);
             return results;
+        }
+        byte GetAt(byte[] number, int position)
+        {
+            Array.Reverse(number);
+            number[position] = (position > number.Length) ? number[position] = (byte)0 : number[position];
+            return number[position];
+
         }
         byte Not(byte number)
         {
@@ -79,37 +97,21 @@ namespace JuniorMindAlgorithm
         }
         byte And(byte number1, byte number2)
         {
-            byte number = 0;
-            if (number1 == 1 && number2 == 1)
-            {
-                number = 1;
-            }
-            else
-            {
-                number = 0;
-            }
+            byte number = (number1 == 1 && number2 == 1) ? number = 1 : number = 0;
             return number;
         }
         byte[] AndOperand(byte[] first, byte[] second)
         {
             byte[] result = new byte[first.Length];
-            for (int i = 0; i < first.Length; i++)
+            for (int i = 0; i < first.Length && i < second.Length; i++)
             {
-                result[i] += And(first[i], second[i]);
+                result[i] += And(GetAt(first, i), GetAt(second, i));
             }
             return result;
         }
         byte Or(byte number1, byte number2)
         {
-            byte number = 0;
-            if (number1 == 0 && number2 == 0)
-            {
-                number = 0;
-            }
-            else
-            {
-                number = 1;
-            }
+           byte number = (number1 == 0 && number2 == 0) ? number = 0 : number = 1;
             return number;
         }
         byte[] OrOperand(byte[] first, byte[] second)

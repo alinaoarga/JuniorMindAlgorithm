@@ -24,7 +24,7 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void Not11()
         {
-            CollectionAssert.AreEqual(new byte[] {0, 1, 0, 0}, NotOperand(new byte[] { 1, 0, 1, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 0, 1, 0, 0 }, NotOperand(new byte[] { 1, 0, 1, 1 }));
         }
         [TestMethod]
         public void Not()
@@ -41,7 +41,7 @@ namespace JuniorMindAlgorithm
         {
             Assert.AreEqual(0, Or(0, 0));
         }
-        
+
         [TestMethod]
         public void OrOperandTest()
         {
@@ -60,7 +60,7 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void GetAtTest()
         {
-            Assert.AreEqual(0, GetAt(new byte[] {1, 0, 1, 0, 1, 1}, 10));
+            Assert.AreEqual(0, GetAt(new byte[] { 1, 0, 1, 0, 1, 1 }, 10));
         }
         byte[] ConvertDecimalToBinary(int number)
         {
@@ -77,10 +77,12 @@ namespace JuniorMindAlgorithm
         }
         byte GetAt(byte[] number, int position)
         {
-            Array.Reverse(number);
-            number[position] = (position > number.Length) ? number[position] = (byte)0 : number[position];
-            return number[position];
-
+           
+            if (position > number.Length)
+            {
+                return (byte)0 ;
+            }
+                    return number[position];
         }
         byte Not(byte number)
         {
@@ -102,16 +104,17 @@ namespace JuniorMindAlgorithm
         }
         byte[] AndOperand(byte[] first, byte[] second)
         {
-            byte[] result = new byte[first.Length];
-            for (int i = 0; i < first.Length && i < second.Length; i++)
-            {
-                result[i] += And(GetAt(first, i), GetAt(second, i));
-            }
-            return result;
+            int maxLength = Math.Max(first.Length, second.Length);
+                byte[] result = new byte[maxLength];
+                for (int i = 0; i < maxLength; i++)
+                {
+                    result[i] += And(GetAt(first, i), GetAt(second, i));
+                }
+            return result; 
         }
         byte Or(byte number1, byte number2)
         {
-           byte number = (number1 == 0 && number2 == 0) ? number = 0 : number = 1;
+            byte number = (number1 == 0 && number2 == 0) ? number = 0 : number = 1;
             return number;
         }
         byte[] OrOperand(byte[] first, byte[] second)

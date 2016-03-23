@@ -58,6 +58,11 @@ namespace JuniorMindAlgorithm
             CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 5), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
         }
         [TestMethod]
+        public void OperandTenFiveTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(10 & 5), AndOperand(ConvertDecimalToBinary(10), ConvertDecimalToBinary(5)));
+        }
+        [TestMethod]
         public void GetAtTest()
         {
             Assert.AreEqual(0, GetAt(new byte[] { 1, 0, 1, 0, 1, 1 }, 10));
@@ -77,12 +82,13 @@ namespace JuniorMindAlgorithm
         }
         byte GetAt(byte[] number, int position)
         {
-           
+
             if (position > number.Length)
             {
-                return (byte)0 ;
+                return (byte)0;
             }
-                    return number[position];
+
+            return number[position];
         }
         byte Not(byte number)
         {
@@ -99,22 +105,22 @@ namespace JuniorMindAlgorithm
         }
         byte And(byte number1, byte number2)
         {
-            byte number = (number1 == 1 && number2 == 1) ? number = 1 : number = 0;
+            byte number = (number1 == 1 && number2 == 1) ? (byte)1 : (byte)0;
             return number;
         }
         byte[] AndOperand(byte[] first, byte[] second)
         {
             int maxLength = Math.Max(first.Length, second.Length);
-                byte[] result = new byte[maxLength];
-                for (int i = 0; i < maxLength; i++)
-                {
-                    result[i] += And(GetAt(first, i), GetAt(second, i));
-                }
-            return result; 
+            byte[] result = new byte[maxLength];
+            for (int i = 0; i < maxLength; i++)
+            {
+                result[i] = And(GetAt(first, i), GetAt(second, i));
+            }
+            return result;
         }
         byte Or(byte number1, byte number2)
         {
-            byte number = (number1 == 0 && number2 == 0) ? number = 0 : number = 1;
+            byte number = (number1 == 0 && number2 == 0) ? (byte)0 : (byte)1;
             return number;
         }
         byte[] OrOperand(byte[] first, byte[] second)
@@ -122,7 +128,7 @@ namespace JuniorMindAlgorithm
             byte[] result = new byte[first.Length];
             for (int i = 0; i < first.Length; i++)
             {
-                result[i] += Or(first[i], second[i]);
+                result[i] = Or(first[i], second[i]);
             }
             return result;
         }

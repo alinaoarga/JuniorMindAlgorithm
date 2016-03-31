@@ -65,7 +65,24 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void GetAtTest()
         {
-            Assert.AreEqual(0, GetAt(new byte[] { 1, 0, 1, 0, 1, 1 }, 10));
+            Assert.AreEqual(1, GetAt(new byte[] { 1, 0, 1, 0, 1, 1 }, 3));
+        }
+        [TestMethod]
+        public void CountTest()
+        {
+            Assert.AreEqual(3, Count(new byte[] { 0, 0, 0, 1, 0, 0, 1 }));
+        }
+        int Count(byte[] number)
+        {
+            int count = 0;
+            foreach (int position in number)
+            {
+                if (position == 0)
+                    count++;
+                else
+                    break;
+            }
+            return count;
         }
         byte[] ConvertDecimalToBinary(int number)
         {
@@ -82,12 +99,11 @@ namespace JuniorMindAlgorithm
         }
         byte GetAt(byte[] number, int position)
         {
-
             if (position > number.Length)
             {
                 return (byte)0;
             }
-
+            Array.Reverse(number);
             return number[position];
         }
         byte Not(byte number)
@@ -114,7 +130,10 @@ namespace JuniorMindAlgorithm
             byte[] result = new byte[maxLength];
             for (int i = 0; i < maxLength; i++)
             {
+                Array.Reverse(first);
+                Array.Reverse(second);
                 result[i] = And(GetAt(first, i), GetAt(second, i));
+                Array.Resize(ref result, result.Length - Count(result));
             }
             return result;
         }

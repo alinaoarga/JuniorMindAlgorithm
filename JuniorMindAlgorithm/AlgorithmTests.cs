@@ -80,42 +80,21 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void CountTest()
         {
-            Assert.AreEqual(3, Count(new byte[] { 0, 0, 0, 1, 0, 0, 1 }));
-        }
-        [TestMethod]
-        public void RemoveTest()
-        {
-            CollectionAssert.AreEqual(new byte[] { 1 }, Remove(new byte[] {0, 0, 1 }));
+            Assert.AreEqual(3, Count(new byte[] { 1, 0, 0, 1, 0, 0, 0 }));
         }
         int Count(byte[] number)
         {
             int count = 0;
-            foreach (int position in number)
+            for (int position = number.Length - 1; position >= 0; position--)
             {
-                if (position == 0)
+                if (number[position] == 0)
                     count++;
                 else
                     break;
             }
-            return count;
+            return count ;
         }
-        byte[] Remove(byte[] number)
-        {
-            Array.Reverse(number);
-            byte[] result = new byte[number.Length - Count(number) - 1];
-            int i = 0;
-            int j = 0;
-            while (i < number.Length)
-            {
-                if (i != Count(number))
-                {
-                    result[j] = number[i - 1];
-                    j++;
-                }
-                i++;
-            }
-            return result;  
-        }
+        
         byte[] ConvertDecimalToBinary(int number)
         {
             byte[] results = new byte[0];
@@ -161,10 +140,8 @@ namespace JuniorMindAlgorithm
             {
                 result[i] = And(GetAt(first, i), GetAt(second, i));
             }
-            
             Array.Resize(ref result, result.Length - Count(result));
             Array.Reverse(result);
-           
             return result;
         }
         byte Or(byte number1, byte number2)

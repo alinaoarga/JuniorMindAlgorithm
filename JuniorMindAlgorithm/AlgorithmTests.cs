@@ -48,6 +48,11 @@ namespace JuniorMindAlgorithm
             CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 3), OrOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
         }
         [TestMethod]
+        public void OrOperanddTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 5), OrOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+        }
+        [TestMethod]
         public void OperandTest()
         {
             CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 3), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
@@ -82,6 +87,16 @@ namespace JuniorMindAlgorithm
         {
             Assert.AreEqual(3, Count(new byte[] { 1, 0, 0, 1, 0, 0, 0 }));
         }
+        [TestMethod]
+        public void XorOperandTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 3), XorOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+        }
+        [TestMethod]
+        public void XorOperanddTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 5), XorOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+        }
         int Count(byte[] number)
         {
             int count = 0;
@@ -92,9 +107,8 @@ namespace JuniorMindAlgorithm
                 else
                     break;
             }
-            return count ;
+            return count;
         }
-        
         byte[] ConvertDecimalToBinary(int number)
         {
             byte[] results = new byte[0];
@@ -151,11 +165,31 @@ namespace JuniorMindAlgorithm
         }
         byte[] OrOperand(byte[] first, byte[] second)
         {
-            byte[] result = new byte[first.Length];
-            for (int i = 0; i < first.Length; i++)
+            int maxLength = Math.Max(first.Length, second.Length);
+            byte[] result = new byte[maxLength];
+            for (int i = 0; i < maxLength; i++)
             {
-                result[i] = Or(first[i], second[i]);
+                result[i] = Or(GetAt(first, i), GetAt(second, i));
             }
+            Array.Resize(ref result, result.Length - Count(result));
+            Array.Reverse(result);
+            return result;
+        }
+        byte Xor(byte number1, byte number2)
+        {
+            byte number = ((number1 == 1 && number2 == 0)||(number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+            return number;
+        }
+        byte[] XorOperand(byte[] first, byte[] second)
+        {
+            int maxLength = Math.Max(first.Length, second.Length);
+            byte[] result = new byte[maxLength];
+            for (int i = 0; i < maxLength; i++)
+            {
+                result[i] = Xor(GetAt(first, i), GetAt(second, i));
+            }
+         Array.Resize(ref result, result.Length - Count(result));
+         Array.Reverse(result);
             return result;
         }
     }

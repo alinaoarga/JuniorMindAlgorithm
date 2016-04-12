@@ -70,7 +70,12 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void GetAttTest()
         {
-            Assert.AreEqual(1, GetAt(new byte[] { 1, 2, 3 }, 2));
+            Assert.AreEqual(0, GetAt(new byte[] { 1, 2, 3 }, 5));
+        }
+        [TestMethod]
+        public void GetAtttTest()
+        {
+            Assert.AreEqual(0, GetAt(new byte[] { 1, 2, 3, 4 }, 5));
         }
         [TestMethod]
         public void CountTest()
@@ -80,7 +85,7 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void RemoveTest()
         {
-            CollectionAssert.AreEqual(new byte [] {1, 0, 0, 1}, Remove(new byte[] { 0, 0, 0, 1, 0, 0, 1 }));
+            CollectionAssert.AreEqual(new byte[] { 1 }, Remove(new byte[] {0, 0, 1 }));
         }
         int Count(byte[] number)
         {
@@ -94,17 +99,22 @@ namespace JuniorMindAlgorithm
             }
             return count;
         }
-        byte [] Remove(byte [] number)
+        byte[] Remove(byte[] number)
         {
             Array.Reverse(number);
-            byte[] result = new byte[number.Length - Count(number)];
+            byte[] result = new byte[number.Length - Count(number) - 1];
+            int i = 0;
+            int j = 0;
+            while (i < number.Length)
             {
-                for (int i = 0; i < result.Length; i++)
+                if (i != Count(number))
                 {
-                    result[i] = number[i];
+                    result[j] = number[i - 1];
+                    j++;
                 }
+                i++;
             }
-            return result;
+            return result;  
         }
         byte[] ConvertDecimalToBinary(int number)
         {
@@ -121,16 +131,9 @@ namespace JuniorMindAlgorithm
         }
         byte GetAt(byte[] number, int position)
         {
-            if (position > number.Length + 1)
+            if (position >= number.Length)
                 return (byte)0;
-            else
-                for (int i = number.Length - 1; i < 1; i--)
-            {
-                    position = 0;
-                number[i] = number[position++];
-                
-            }
-        return number[number.Length - 1 - position];
+            return number[number.Length - 1 - position];
         }
         byte Not(byte number)
         {
@@ -158,8 +161,10 @@ namespace JuniorMindAlgorithm
             {
                 result[i] = And(GetAt(first, i), GetAt(second, i));
             }
+            
             Array.Resize(ref result, result.Length - Count(result));
             Array.Reverse(result);
+           
             return result;
         }
         byte Or(byte number1, byte number2)

@@ -97,6 +97,16 @@ namespace JuniorMindAlgorithm
         {
             CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 5), XorOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
         }
+        [TestMethod]
+        public void RightHandShiftTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(9 >> 2), RightHandShift(ConvertDecimalToBinary(9), 2));
+        }
+        [TestMethod]
+        public void LeftHandShiftTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(9 << 2), LeftHandShift(ConvertDecimalToBinary(9), 2));
+        }
         int Count(byte[] number)
         {
             int count = 0;
@@ -177,7 +187,7 @@ namespace JuniorMindAlgorithm
         }
         byte Xor(byte number1, byte number2)
         {
-            byte number = ((number1 == 1 && number2 == 0)||(number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+            byte number = ((number1 == 1 && number2 == 0) || (number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
             return number;
         }
         byte[] XorOperand(byte[] first, byte[] second)
@@ -188,8 +198,30 @@ namespace JuniorMindAlgorithm
             {
                 result[i] = Xor(GetAt(first, i), GetAt(second, i));
             }
-         Array.Resize(ref result, result.Length - Count(result));
-         Array.Reverse(result);
+            Array.Resize(ref result, result.Length - Count(result));
+            Array.Reverse(result);
+            return result;
+        }
+        byte [] RightHandShift(byte [] number, int position)
+        {
+            byte[] result = new byte[number.Length - position];
+            int i = 0;
+            while (i < number.Length - position)
+            {
+                result[i] = number[i];
+                i++;
+            }
+            return result;
+        }
+        byte [] LeftHandShift(byte [] number, int position)
+        {
+            byte[] result = new byte[number.Length + position];
+            for (int i = 0; i < number.Length; i++)
+            {
+                result[i] = number[i];
+                if (i > number.Length)
+                    result[i] += (byte)0;
+            }
             return result;
         }
     }

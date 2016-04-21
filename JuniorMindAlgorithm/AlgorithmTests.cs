@@ -107,6 +107,26 @@ namespace JuniorMindAlgorithm
         {
             CollectionAssert.AreEqual(ConvertDecimalToBinary(9 << 2), LeftHandShift(ConvertDecimalToBinary(9), 2));
         }
+        [TestMethod]
+        public void LessTest()
+        {
+            CollectionAssert.AreEqual(new byte[] { 1 }, LessThan(new byte[] { 0, 0, 1 }, new byte[] { 1 }));
+        }
+        [TestMethod]
+        public void LessThanTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2), LessThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
+        }
+        [TestMethod]
+        public void GraterThanTest()
+        {
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(9), GraterThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
+        }
+        [TestMethod]
+        public void EqualTest()
+        {
+            Assert.AreEqual(true, Equal(ConvertDecimalToBinary(9), ConvertDecimalToBinary(9)));
+        }
         int Count(byte[] number)
         {
             int count = 0;
@@ -202,7 +222,7 @@ namespace JuniorMindAlgorithm
             Array.Reverse(result);
             return result;
         }
-        byte [] RightHandShift(byte [] number, int position)
+        byte[] RightHandShift(byte[] number, int position)
         {
             byte[] result = new byte[number.Length - position];
             int i = 0;
@@ -213,16 +233,32 @@ namespace JuniorMindAlgorithm
             }
             return result;
         }
-        byte [] LeftHandShift(byte [] number, int position)
+        byte[] LeftHandShift(byte[] number, int position)
         {
             byte[] result = new byte[number.Length + position];
             for (int i = 0; i < number.Length; i++)
             {
                 result[i] = number[i];
-                if (i > number.Length)
-                    result[i] += (byte)0;
             }
             return result;
+        }
+        byte[] LessThan(byte[] number1, byte[] number2)
+        {
+            int maxLength = Math.Max(number1.Length, number2.Length);
+            for (int i = 0; i < maxLength; i++)
+                if (GetAt(number1, i) < GetAt(number2, i))
+                    return number1;
+            return number2;
+        }
+        byte[] GraterThan(byte[] number1, byte[] number2)
+        {
+            byte[] number = (LessThan(number1, number2) == number1) ? number2 : number1;
+            return number;
+        }
+        bool Equal(byte[] number1, byte[] number2)
+        {
+            bool number = ((LessThan(number1, number2) == number1) && (LessThan(number1, number2) == number2)) ? true : false;
+            return number;
         }
     }
 }

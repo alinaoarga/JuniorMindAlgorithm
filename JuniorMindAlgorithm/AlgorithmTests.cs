@@ -32,40 +32,29 @@ namespace JuniorMindAlgorithm
             Assert.AreEqual(1, Not(0));
         }
         [TestMethod]
-        public void And()
-        {
-            Assert.AreEqual(1, And(1, 1));
-        }
-        [TestMethod]
-        public void Or()
-        {
-            Assert.AreEqual(0, Or(0, 0));
-        }
-
-        [TestMethod]
         public void OrOperandTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 3), OrOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 3), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3), "or"));
         }
         [TestMethod]
         public void OrOperanddTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 5), OrOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 | 5), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5), "or"));
         }
         [TestMethod]
         public void OperandTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 3), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 3), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3), "and"));
         }
         [TestMethod]
         public void OperanddTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 5), AndOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 & 5), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5), "and"));
         }
         [TestMethod]
         public void OperandTenFiveTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(10 & 5), AndOperand(ConvertDecimalToBinary(10), ConvertDecimalToBinary(5)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(10 & 5), General(ConvertDecimalToBinary(10), ConvertDecimalToBinary(5), "and"));
         }
         [TestMethod]
         public void GetAtTest()
@@ -90,12 +79,12 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void XorOperandTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 3), XorOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 3), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(3), "xor"));
         }
         [TestMethod]
         public void XorOperanddTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 5), XorOperand(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5)));
+            CollectionAssert.AreEqual(ConvertDecimalToBinary(2 ^ 5), General(ConvertDecimalToBinary(2), ConvertDecimalToBinary(5), "xor"));
         }
         [TestMethod]
         public void RightHandShiftTest()
@@ -110,17 +99,17 @@ namespace JuniorMindAlgorithm
         [TestMethod]
         public void LessTest()
         {
-            CollectionAssert.AreEqual(new byte[] { 1 }, LessThan(new byte[] { 0, 0, 1 }, new byte[] { 1 }));
+            Assert.AreEqual(true, LessThan(new byte[] { 1, 0 }, new byte[] { 1, 0, 0, 1 }));
         }
         [TestMethod]
         public void LessThanTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(2), LessThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
+            Assert.AreEqual(true, LessThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
         }
         [TestMethod]
         public void GraterThanTest()
         {
-            CollectionAssert.AreEqual(ConvertDecimalToBinary(9), GraterThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
+            Assert.AreEqual(false, GraterThan(ConvertDecimalToBinary(2), ConvertDecimalToBinary(9)));
         }
         [TestMethod]
         public void EqualTest()
@@ -171,52 +160,30 @@ namespace JuniorMindAlgorithm
             }
             return numbers;
         }
-        byte And(byte number1, byte number2)
+        byte AndOrXor(string option, byte number1, byte number2)
         {
-            byte number = (number1 == 1 && number2 == 1) ? (byte)1 : (byte)0;
-            return number;
-        }
-        byte[] AndOperand(byte[] first, byte[] second)
-        {
-            int maxLength = Math.Max(first.Length, second.Length);
-            byte[] result = new byte[maxLength];
-            for (int i = 0; i < maxLength; i++)
+            byte number = 0;
+            if (option == "and")
             {
-                result[i] = And(GetAt(first, i), GetAt(second, i));
+                number = (number1 == 1 && number2 == 1) ? (byte)1 : (byte)0;
             }
-            Array.Resize(ref result, result.Length - Count(result));
-            Array.Reverse(result);
-            return result;
-        }
-        byte Or(byte number1, byte number2)
-        {
-            byte number = (number1 == 0 && number2 == 0) ? (byte)0 : (byte)1;
-            return number;
-        }
-        byte[] OrOperand(byte[] first, byte[] second)
-        {
-            int maxLength = Math.Max(first.Length, second.Length);
-            byte[] result = new byte[maxLength];
-            for (int i = 0; i < maxLength; i++)
+            else if (option == "or")
             {
-                result[i] = Or(GetAt(first, i), GetAt(second, i));
+                number = (number1 == 0 && number2 == 0) ? (byte)0 : (byte)1;
             }
-            Array.Resize(ref result, result.Length - Count(result));
-            Array.Reverse(result);
-            return result;
-        }
-        byte Xor(byte number1, byte number2)
-        {
-            byte number = ((number1 == 1 && number2 == 0) || (number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+            else if (option == "xor")
+            {
+                number = ((number1 == 1 && number2 == 0) || (number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+            }
             return number;
         }
-        byte[] XorOperand(byte[] first, byte[] second)
+        byte[] General(byte[] first, byte[] second, string option)
         {
             int maxLength = Math.Max(first.Length, second.Length);
             byte[] result = new byte[maxLength];
             for (int i = 0; i < maxLength; i++)
             {
-                result[i] = Xor(GetAt(first, i), GetAt(second, i));
+                result[i] = AndOrXor(option, GetAt(first, i), GetAt(second, i));
             }
             Array.Resize(ref result, result.Length - Count(result));
             Array.Reverse(result);
@@ -242,23 +209,26 @@ namespace JuniorMindAlgorithm
             }
             return result;
         }
-        byte[] LessThan(byte[] number1, byte[] number2)
+        bool LessThan(byte[] number1, byte[] number2)
         {
             int maxLength = Math.Max(number1.Length, number2.Length);
+            Array.Reverse(number1);
+            Array.Reverse(number2);
             for (int i = 0; i < maxLength; i++)
+            {
                 if (GetAt(number1, i) < GetAt(number2, i))
-                    return number1;
-            return number2;
+                return true;
+            }
+            return false;
         }
-        byte[] GraterThan(byte[] number1, byte[] number2)
+        bool GraterThan(byte[] number1, byte[] number2)
         {
-            byte[] number = (LessThan(number1, number2) == number1) ? number2 : number1;
-            return number;
+            return (LessThan(number1, number2) == true) ? false : true;
         }
         bool Equal(byte[] number1, byte[] number2)
         {
-            bool number = ((LessThan(number1, number2) == number1) && (LessThan(number1, number2) == number2)) ? true : false;
-            return number;
+            return ((LessThan(number1, number2) == true) && (LessThan(number1, number2) == true)) ? false : true;
         }
     }
 }
+

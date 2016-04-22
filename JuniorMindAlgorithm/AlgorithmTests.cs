@@ -163,17 +163,17 @@ namespace JuniorMindAlgorithm
         byte AndOrXor(string option, byte number1, byte number2)
         {
             byte number = 0;
-            if (option == "and")
+            switch(option)
             {
-                number = (number1 == 1 && number2 == 1) ? (byte)1 : (byte)0;
-            }
-            else if (option == "or")
-            {
-                number = (number1 == 0 && number2 == 0) ? (byte)0 : (byte)1;
-            }
-            else if (option == "xor")
-            {
-                number = ((number1 == 1 && number2 == 0) || (number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+                case "and":
+                    number = (number1 == 1 && number2 == 1) ? (byte)1 : (byte)0;
+                    break;
+                case "or":
+                    number = (number1 == 0 && number2 == 0) ? (byte)0 : (byte)1;
+                    break;
+                case "xor":
+                    number = ((number1 == 1 && number2 == 0) || (number1 == 0 && number2 == 1)) ? (byte)1 : (byte)0;
+                    break;
             }
             return number;
         }
